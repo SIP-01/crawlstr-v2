@@ -2,10 +2,12 @@
  * SIP-01 (Search Index Protocol) — Crawlstr publisher implementation.
  * Canonical spec: https://github.com/NostrDanish/SIP-01 (public/spec/SIP-01.md)
  *
- * Spec revision implemented: v1.2. The v1.2 revision audited NIP references
+ * Spec revision implemented: v1.3. The v1.2 revision audited NIP references
  * (NIP-33 folded into NIP-01; the `l` convention is NIP-32's, used here in the
- * bare two-letter form per §12.5) and added the §20 dependency table — the
- * wire format is unchanged and every v1/v1.1 event remains valid.
+ * bare two-letter form per §12.5) and added the §20 dependency table. v1.3 adds
+ * optional `role`/repeatable `proto` tags and an optional NIP-01 `a` pointer to
+ * a kind-39698 capability announcement. Kind 39697 and wire schema `v=1` are
+ * unchanged; older consumers may ignore these optional extensions.
  *
  * Byte-compatible with the canonical reference port
  * (SIP-01 repo, src/lib/sip01-utils.ts), which is itself byte-compatible with:
