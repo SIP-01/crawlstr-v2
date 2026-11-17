@@ -218,7 +218,7 @@ Any SIP-01 compatible search engine can read Crawlstr's observations:
 ```json
 {
   "kinds": [39697],
-  "#d": ["widx:9f86d081884c7d659a2feaa0c55ad015"]
+  "#d": ["widx:3641c5f2274c5471278ab5bf1df6d185"]
 }
 ```
 
