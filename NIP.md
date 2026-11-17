@@ -15,6 +15,12 @@ specification v1.3** — [github.com/NostrDanish/SIP-01](https://github.com/Nost
 > us: addressable-kind semantics are now cited from NIP-01 (NIP-33 was folded
 > in), and the `l` tag convention is NIP-32's, used here in the bare two-letter
 > form per §12.5 — which is exactly what we emit.
+>
+> **v1.3 compatibility note:** the kind-39697 builder accepts optional `role`,
+> repeatable `proto`, and an optional NIP-01 `a` pointer to kind 39698. This
+> Crawlstr v2 generation does not publish kind-39698 capability announcements;
+> ordinary crawl/index observations omit the optional hints. The wire schema
+> remains `v="1"`, regardless of the crawler's own heartbeat version.
 
 ## Protocol Compatibility
 
@@ -51,7 +57,7 @@ Consumers treat heartbeats older than **1 hour** as offline.
 }
 ```
 
-**Tags:** `v` (node protocol version — `"2"` for Crawlstr v2 nodes), `shard`
+**Heartbeat tags:** `v` (node protocol version — `"2"` for Crawlstr v2 nodes), `shard`
 (home shard, two uppercase hex chars — first byte of the indexer pubkey),
 `source` (`crawlstr/v2`), `alt` (human-readable).
 
@@ -89,10 +95,10 @@ public metadata."*
   "created_at": 1786250000,
   "content": "{\"title\":\"Example Page\",\"description\":\"A page about...\",\"image\":\"https://example.com/og.jpg\"}",
   "tags": [
-    ["d", "widx:9f86d081884c7d659a2feaa0c55ad015"],
+    ["d", "widx:3641c5f2274c5471278ab5bf1df6d185"],
     ["u", "https://example.com/page"],
     ["l", "en"],
-    ["x", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"],
+    ["x", "13c3940b2829e9397d43d54f0145c6b3f792ebbe13674ac6e5de1b354a1b3e7a"],
     ["v", "1"],
     ["published", "1786200000"],
     ["source", "crawlstr/v2"],
@@ -124,6 +130,8 @@ public metadata."*
 | `network` | always `clearnet` | A browser crawler can only reach the clearnet |
 | `type` | `page` / `repository` | `repository` for GitHub/GitLab hosts, else `page` |
 | `platform` | e.g. `github`, `youtube`, `wikipedia` | Emitted for well-known hosts only |
+| `role` | `agent`, `tool`, `model`, `api`, `compute`, `dataset`, `gateway` | Optional v1.3 provider-class hint; not emitted by the ordinary crawler flow |
+| `proto` | `mcp`, `http`, `contextvm`, `nostr`, `a2a` | Optional v1.3 repeatable transport hint; not emitted by the ordinary crawler flow |
 
 **Key properties (same as all SIP-01 publishers):**
 
@@ -210,7 +218,7 @@ Any SIP-01 compatible search engine can read Crawlstr's observations:
 ```json
 {
   "kinds": [39697],
-  "#d": ["widx:9f86d081884c7d659a2feaa0c55ad015"]
+  "#d": ["widx:3641c5f2274c5471278ab5bf1df6d185"]
 }
 ```
 
@@ -245,7 +253,7 @@ operators from spec §15 (`site:`, `title:`, `lang:`, `after:`, …):
 
 ## References
 
-- **Canonical spec (v1.1):** [NostrDanish/SIP-01](https://github.com/NostrDanish/SIP-01) — `public/spec/SIP-01.md`
+- **Canonical spec (v1.3):** [NostrDanish/SIP-01](https://github.com/NostrDanish/SIP-01) — `public/spec/SIP-01.md`
 - **Implementation guide:** [SIP-01/docs/IMPLEMENTATION-GUIDE.md](https://github.com/NostrDanish/SIP-01/blob/main/docs/IMPLEMENTATION-GUIDE.md)
 - **Reference port:** [SIP-01/src/lib/sip01-utils.ts](https://github.com/NostrDanish/SIP-01/blob/main/src/lib/sip01-utils.ts)
 - **0xSearchstr NIP.md:** [legacy schemas, community submissions, Nostra interop](https://github.com/NostrDanish/0xSearchstr/blob/main/NIP.md)
